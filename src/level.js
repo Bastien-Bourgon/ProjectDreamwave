@@ -32,14 +32,21 @@ function createLevel(scene)
     createPlane(40,40,0,6,0,0,0,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
     createPlane(40,40,0,5,0,0,0,180,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
 
-    createPlane(1,2,0,1,50,270,0,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined)
-    createPlane(1,2,0,1,50,270,180,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined)
+    createPlane(1,2,0,1,150,270,0,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined,false,"billboard door")
+    //createPlane(1,2,0,1,50,270,180,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined)
+
+    createPlane(0.66,(159/52)*0.66,15,1.1,15,270,0,0,scene,new BABYLON.Color3.White(),"img/senora.png",undefined,true,"billboard")
+
+    generateForest(scene,25,25,20,20,10)
+    generateForest(scene,-25-190,25,20,20,10)
+    generateForest(scene,-25-190,-25-190,20,20,10)
+    generateForest(scene,25,-25-190,20,20,10)
 
     createHemisphericLight(0,1,0,1,scene)
     createHemisphericLight(0,-1,0,1,scene)
 }
 
-function createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale)
+function createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,tag)
 {
     var plane = BABYLON.MeshBuilder.CreateGround("plane", {width: width, height: height}, scene);
     plane.material = new BABYLON.StandardMaterial("groundMat", scene);
@@ -47,6 +54,15 @@ function createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilin
     if (tilingScale != undefined) {
     plane.material.diffuseTexture.uScale=width*tilingScale;
     plane.material.diffuseTexture.vScale=height*tilingScale;
+    }
+    if (transparent==true)
+    {
+    plane.material.diffuseTexture.hasAlpha=true
+    plane.material.useAlphaFromDiffuseTexture = true;
+    }
+    if (tag != undefined)
+    {
+        BABYLON.Tags.AddTagsTo(plane, tag);
     }
     plane.material.diffuseColor = color;
     plane.position.x=x
@@ -111,4 +127,14 @@ function createDirectionalLight(x,y,z,intensity,scene)
 {
     const light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(x, y, z), scene);
     light.intensity = intensity;
+}
+
+function generateForest(scene, x, y, depth, width, offset)
+{
+    for (let i = x; i < x+(depth*offset); i+=offset) {
+        for (let j = y; j < y+(width*offset); j+=offset) {
+            createPlane(2,2,i,1,j,270,45,0,scene,new BABYLON.Color3.White(),"img/tree.png",undefined,true,"billboard")
+        }    
+    }
+    
 }

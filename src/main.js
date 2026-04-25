@@ -325,6 +325,18 @@ const scene = createScene(); //Call the createScene function
 
 // Register a render loop to repeatedly render the scene
 engine.runRenderLoop(function () {
+        const billboard_sprites = scene.getMeshesByTags("billboard")
+        const doors = scene.getMeshesByTags("door")
+        for (let index = 0; index < billboard_sprites.length; index++) {
+            billboard_sprites[index].rotation.y = scene.activeCameras[0].rotation.y
+        }
+        for (let index = 0; index < doors.length; index++) {
+            const distance = BABYLON.Vector3.Distance(scene.activeCameras[0].position, doors[index].position);
+            if (distance<5)
+            {
+                //console.log("trigger")
+            }
+        }
         scene.render();
 });
 // Watch for browser/canvas resize events
