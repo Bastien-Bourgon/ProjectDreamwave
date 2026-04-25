@@ -1,7 +1,7 @@
 function createLevel(scene)
 {
     createPlane(999,999,0,0,0,0,0,0,scene,new BABYLON.Color3.White(),"img/grass.png",2.0)
-    createPlane(40,40,0,0.01,0,0,0,0,scene,new BABYLON.Color3.White(),"img/stone_tiles.png",1.0)
+    createPlane(40,40,0,0.01,0,0,0,0,scene,new BABYLON.Color3.White(),"img/stone_tile.png",2.0)
 
     createPlane(15,10,-12.5,1,19,90,180,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
     createPlane(10,3,0,4.5,19,90,180,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)

@@ -7,8 +7,8 @@ const createScene = function () {
     var camera = new BABYLON.UniversalCamera("MyCamera", new BABYLON.Vector3(0, 1, 0), scene);
     camera.minZ = 0.01;
     camera.attachControl(canvas, true);
-    camera.speed = 0.01;
-    camera.angularSpeed = 0.02;
+    camera.speed = 0.015;
+    camera.angularSpeed = 0.025;
     camera.angle = Math.PI/2;
     camera.direction = new BABYLON.Vector3(Math.cos(camera.angle), 0, Math.sin(camera.angle));
     
