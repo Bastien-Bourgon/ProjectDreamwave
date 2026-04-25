@@ -32,10 +32,10 @@ function createLevel(scene)
     createPlane(40,40,0,6,0,0,0,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
     createPlane(40,40,0,5,0,0,0,180,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
 
-    createPlane(1,2,0,1,150,270,0,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined,false,"billboard door")
-    //createPlane(1,2,0,1,50,270,180,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined)
-
-    createPlane(0.66,(159/52)*0.66,15,1.1,15,270,0,0,scene,new BABYLON.Color3.White(),"img/senora.png",undefined,true,"billboard")
+    createPlane(1,2,0,1,70,270,0,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined,false,"door")
+    createPlane(1,2,0,1,70,270,180,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined,false)
+    
+    createPlane(0.5,(159/52)*0.5,18,0.8,18,270,0,0,scene,new BABYLON.Color3.White(),"img/senora.png",undefined,true,"billboard")
 
     generateForest(scene,25,25,20,20,10)
     generateForest(scene,-25-190,25,20,20,10)
