@@ -1,51 +1,3 @@
-function createLevel(scene)
-{
-    createPlane(999,999,0,0,0,0,0,0,scene,new BABYLON.Color3.White(),"img/grass.png",2.0)
-    createPlane(40,40,0,0.01,0,0,0,0,scene,new BABYLON.Color3.White(),"img/stone_tile.png",2.0)
-
-    createPlane(15,10,-12.5,1,19,90,180,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(10,3,0,4.5,19,90,180,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(15,10,12.5,1,19,90,180,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(15,10,-12.5,1,20,90,0,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(10,3,0,4.5,20,90,0,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(15,10,12.5,1,20,90,0,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(1,10,5,1,19.5,90,90,180,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(1,10,-5,1,19.5,90,-90,180,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(10,1,0,3,19.5,0,0,180,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-
-    createPlane(15,10,-12.5,1,-19,90,0,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(10,3,0,4.5,-19,90,0,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(15,10,12.5,1,-19,90,0,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(15,10,-12.5,1,-20,90,180,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(10,3,0,4.5,-20,90,180,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(15,10,12.5,1,-20,90,180,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(1,10,5,1,-19.5,90,90,180,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(1,10,-5,1,-19.5,90,-90,180,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(10,1,0,3,-19.5,0,0,180,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-
-    createPlane(40,10,-19,1,0,90,180,90,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(40,10,-20,1,0,90,180,270,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-
-    createPlane(40,10,19,1,0,90,180,270,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(40,10,20,1,0,90,180,90,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-
-    createPlane(40,40,0,6,0,0,0,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-    createPlane(40,40,0,5,0,0,0,180,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
-
-    createPlane(1,2,0,1,70,270,0,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined,false,"door")
-    createPlane(1,2,0,1,70,270,180,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined,false)
-    
-    createPlane(0.5,(159/52)*0.5,18,0.8,18,270,0,0,scene,new BABYLON.Color3.White(),"img/senora.png",undefined,true,"billboard")
-
-    generateForest(scene,25,25,20,20,10)
-    generateForest(scene,-25-190,25,20,20,10)
-    generateForest(scene,-25-190,-25-190,20,20,10)
-    generateForest(scene,25,-25-190,20,20,10)
-
-    createHemisphericLight(0,1,0,1,scene)
-    createHemisphericLight(0,-1,0,1,scene)
-}
-
 function createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,tag)
 {
     var plane = BABYLON.MeshBuilder.CreateGround("plane", {width: width, height: height}, scene);
@@ -72,6 +24,7 @@ function createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilin
     plane.rotation.y=BABYLON.Tools.ToRadians(rotY)
     plane.rotation.z=BABYLON.Tools.ToRadians(rotZ)
     plane.checkCollisions = true;
+    return plane
 }
 
 function createBox(width,height,depth,x,y,z,scene,color,texture)
@@ -102,6 +55,12 @@ function createCube(size,x,y,z,scene,color,texture)
     cube.checkCollisions = true;
 }
 
+function createDoor(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,destX,destY,destZ)
+{
+    var plane = createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,"door")
+    plane.destination = new BABYLON.Vector3(destX,destY,destZ)
+}
+
 var randomNumber = function (min, max) {
     if (min == max) {
         return (min);
@@ -127,6 +86,29 @@ function createDirectionalLight(x,y,z,intensity,scene)
 {
     const light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(x, y, z), scene);
     light.intensity = intensity;
+}
+
+function createText(string,scene,size,resolution,depth,x,y,z,rotX,rotY,rotZ)
+{
+    const fontData = fetch("fonts/Droid Sans_Regular.json").then(response => response.json().then(data => {
+        const text = new BABYLON.MeshBuilder.CreateText("text",string,data,{size:size,resolution:resolution,depth:depth},scene)
+        text.checkCollisions = false;
+        BABYLON.Tags.AddTagsTo(text, "billboard");
+        text.position.x=x
+        text.position.y=y
+        text.position.z=z
+        text.rotation.x=BABYLON.Tools.ToRadians(rotX)
+        text.rotation.y=BABYLON.Tools.ToRadians(rotY)
+        text.rotation.z=BABYLON.Tools.ToRadians(rotZ)
+    }))
+    
+}
+
+function createNPC(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,tag,dialogue,name,nameoffset)
+{
+    var npc = createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,tag+" npc")
+    createText(name,scene,0.2,8,0.001,x,y+nameoffset,z,0,rotY,0)
+    npc.dialogue = dialogue
 }
 
 function generateForest(scene, x, y, depth, width, offset)
