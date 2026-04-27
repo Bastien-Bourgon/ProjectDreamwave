@@ -1,6 +1,14 @@
-function createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,tag)
+function createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,tag,name)
 {
-    var plane = BABYLON.MeshBuilder.CreateGround("plane", {width: width, height: height}, scene);
+    if (name!=undefined)
+    {
+        plane_name = "plane"
+    }
+    else
+    {
+        plane_name = name
+    }
+    var plane = BABYLON.MeshBuilder.CreateGround(name, {width: width, height: height}, scene);
     plane.material = new BABYLON.StandardMaterial("groundMat", scene);
     plane.material.diffuseTexture = new BABYLON.Texture(texture, scene);
     if (tilingScale != undefined) {
@@ -55,10 +63,14 @@ function createCube(size,x,y,z,scene,color,texture)
     cube.checkCollisions = true;
 }
 
-function createDoor(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,destX,destY,destZ)
+function createDoor(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,destX,destY,destZ,destScene)
 {
-    var plane = createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,"door")
-    plane.destination = new BABYLON.Vector3(destX,destY,destZ)
+    var door = createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,"door")
+    door.destination = new BABYLON.Vector3(destX,destY,destZ)
+    if (destScene!=undefined)
+    {
+        door.destinationScene = destScene
+    }
 }
 
 var randomNumber = function (min, max) {
@@ -106,7 +118,7 @@ function createText(string,scene,size,resolution,depth,x,y,z,rotX,rotY,rotZ)
 
 function createNPC(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,tag,dialogue,name,nameoffset)
 {
-    var npc = createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,tag+" npc")
+    var npc = createPlane(width,height,x,y,z,rotX,rotY,rotZ,scene,color,texture,tilingScale,transparent,tag+" npc",name)
     createText(name,scene,0.2,8,0.001,x,y+nameoffset,z,0,rotY,0)
     npc.dialogue = dialogue
 }

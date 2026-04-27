@@ -321,8 +321,8 @@ function createSceneCore()
 
 function loadGUI(scene)
 {
-    //var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI", true, scene);
-    //createTextBlock(200,400,"test","white","red",advancedTexture)
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI", true, scene);
+    createDialogueBox(800,200,20,"white","3","black",advancedTexture,"white",300)
 }
 
 function loadScene1()
@@ -362,7 +362,7 @@ function loadScene1()
     createPlane(40,40,0,6,0,0,0,0,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
     createPlane(40,40,0,5,0,0,0,180,scene,new BABYLON.Color3.White(),"img/brick_wall.png",1.0)
 
-    createDoor(1,2,0,1,70,270,0,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined,false,0,1,0)
+    createDoor(1,2,0,1,70,270,0,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined,false,0,1,0,"hallway")
     createPlane(1,2,0,1,70,270,180,0,scene,new BABYLON.Color3.White(),"img/door_metal.png",undefined,false)
     
     createNPC(0.5,(159/52)*0.5,18,0.8,18,270,0,0,scene,new BABYLON.Color3.White(),"img/senora.png",undefined,true,"billboard","hello","Serona",0.8)
@@ -382,6 +382,7 @@ function loadScene1()
 function loadScene2()
 {
     var scene = createSceneCore()
+    loadGUI(scene)
     createPlane(100,2500,0,0,0,0,0,0,scene,new BABYLON.Color3.White(),"img/debugwhite.png",2.0)
     createPlane(100,2500,0,25,0,0,0,180,scene,new BABYLON.Color3.White(),"img/debugwhite.png",2.0)
     createPlane(2500,100,5,50,0,270,90,0,scene,new BABYLON.Color3.White(),"img/white_tiles.png",2.0)
